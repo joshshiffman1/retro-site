@@ -139,17 +139,19 @@ footer{
 }
 
 /* =============================
-   Image-based Wizard (PNG)
+   Erratic Wandering Wizard (PNG) + Flip
    ============================= */
 .wizard-image {
   position: fixed;
-  right: 1rem;
-  bottom: .75rem;
+  bottom: 0;
+  left: 0;
   z-index: 50;
-  pointer-events: none;       /* clicks pass through */
-  width: clamp(90px, 12vw, 160px);
-  animation: wizard-float 6s ease-in-out infinite;
+  pointer-events: none;                 /* clicks pass through */
+  width: clamp(70px, 8vw, 120px);       /* smaller wizard size */
   opacity: .95;
+  transform-origin: center bottom;      /* flip around feet */
+  will-change: transform;
+  animation: wizard-wander 12s infinite ease-in-out;
 }
 
 .wizard-image img {
@@ -158,10 +160,16 @@ footer{
   height: auto;
 }
 
-/* Gentle up–down float (no side-to-side) */
-@keyframes wizard-float {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-6px); }
+/* Erratic wandering across bottom half with directional flips */
+@keyframes wizard-wander {
+  0%   { transform: translate3d(0,   0, 0)          scaleX(1); }
+  10%  { transform: translate3d(120px, -40px, 0)    scaleX(1); }
+  25%  { transform: translate3d(300px, -100px, 0)   scaleX(-1); }  /* flip */
+  40%  { transform: translate3d(80px,  -150px, 0)   scaleX(-1); }
+  55%  { transform: translate3d(400px, -60px, 0)    scaleX(1); }   /* flip back */
+  70%  { transform: translate3d(200px, -120px, 0)   scaleX(-1); }  /* flip */
+  85%  { transform: translate3d(500px, -30px, 0)    scaleX(1); }   /* flip back */
+  100% { transform: translate3d(0,    0, 0)         scaleX(1); }
 }
 
 /* Respect reduced-motion preferences */
@@ -169,7 +177,7 @@ footer{
   .wizard-image { animation: none; }
 }
 
-/* Hide on very small screens */
+/* Hide wizard on very small screens */
 @media (max-width: 480px) {
   .wizard-image { display: none; }
 }
