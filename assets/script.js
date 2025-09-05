@@ -28,43 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }, Math.max(0, msToNextMinute));
   }
 
-  // ---- Logo: witch-hat image ABOVE live time ----
+  // ---- Logo: live hh:mm AM/PM in Eastern (text only) ----
   const logoLink = document.querySelector('a.logo');
 
-  function buildLogoOnce() {
-    if (!logoLink) return null;
-
-    // Clear any existing text
-    logoLink.textContent = '';
-
-    // Create and add image
-    const logoImg = new Image();
-    logoImg.src = 'assets/img/witch-hat.png';
-    logoImg.alt = 'Site logo';
-    logoImg.className = 'logo-img'; // styled in CSS
-
-    // Create and add time element
-    const timeSpan = document.createElement('span');
-    timeSpan.className = 'logo-time'; // styled in CSS
-    timeSpan.textContent = nowHHMM();
-
-    // Stack them inside the anchor
-    logoLink.appendChild(logoImg);
-    logoLink.appendChild(timeSpan);
-
-    // Basic link attributes
-    logoLink.setAttribute('href', SITE.home);
-    logoLink.setAttribute('aria-label', `Home — ${timeSpan.textContent} Eastern`);
-
-    return timeSpan;
-  }
-
-  const timeNode = buildLogoOnce();
-
   function updateLogoTime() {
-    if (!logoLink || !timeNode) return;
+    if (!logoLink) return;
     const t = nowHHMM();
-    timeNode.textContent = t;
+    logoLink.textContent = t;
+    logoLink.setAttribute('href', SITE.home);
     logoLink.setAttribute('aria-label', `Home — ${t} Eastern`);
   }
 
