@@ -147,7 +147,7 @@ footer{
   left: 0;
   z-index: 50;
   pointer-events: none;                 /* clicks pass through */
-  width: clamp(50px, 6vw, 90px);        /* smaller wizard size */
+  width: clamp(40px, 5vw, 70px);        /* smaller wizard size */
   opacity: .95;
   transform-origin: center bottom;      /* flip around feet */
   will-change: transform;
