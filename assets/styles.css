@@ -138,56 +138,38 @@ footer{
   .nav-links.show{ display: flex; }
 }
 
-/* Wizard Animation */
-.wizard-animation {
+/* =============================
+   Image-based Wizard (PNG)
+   ============================= */
+.wizard-image {
   position: fixed;
-  bottom: 0;
-  left: 0;
+  right: 1rem;
+  bottom: .75rem;
+  z-index: 50;
+  pointer-events: none;       /* clicks pass through */
+  width: clamp(90px, 12vw, 160px);
+  animation: wizard-float 6s ease-in-out infinite;
+  opacity: .95;
+}
+
+.wizard-image img {
+  display: block;
   width: 100%;
-  height: 100px;
-  background: var(--bg);
-  overflow: hidden;
+  height: auto;
 }
 
-.wizard {
-  position: absolute;
-  bottom: 10px;
-  width: 50px;
-  height: 80px;
-  background: #7c93b8; /* Wizard body color, matches your theme */
-  border-radius: 50% 50% 0 0;
-  animation: moveWizard 6s infinite linear;
+/* Gentle up–down float (no side-to-side) */
+@keyframes wizard-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
 }
 
-.wizard::before {
-  content: '';
-  position: absolute;
-  top: -20px;
-  left: 10px;
-  width: 30px;
-  height: 30px;
-  background: #5d76a4; /* Hat color */
-  border-radius: 50% 50% 0 0;
-  transform: rotate(-45deg);
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .wizard-image { animation: none; }
 }
 
-.wizard::after {
-  content: '';
-  position: absolute;
-  top: 30px;
-  left: -10px;
-  width: 20px;
-  height: 40px;
-  background: #7c93b8;
-  border-radius: 50%;
-  transform: rotate(20deg); /* Arm effect */
-}
-
-@keyframes moveWizard {
-  0% { left: -50px; }
-  20% { transform: translateX(0); }
-  40% { transform: translateX(200px); }
-  60% { transform: translateX(400px); }
-  80% { transform: translateX(600px); }
-  100% { left: 100%; }
+/* Hide on very small screens */
+@media (max-width: 480px) {
+  .wizard-image { display: none; }
 }
