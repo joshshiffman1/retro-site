@@ -138,20 +138,18 @@ footer{
 }
 
 /* =============================
-   Card Grids (multiple cards per page)
+   Card Stack (wide cards, vertical)
    ============================= */
 .cards{
-  display: grid;
-  gap: var(--space-3);
-  grid-template-columns: 1fr; /* default single column */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);     /* space between each card */
 }
-@media (min-width: 640px){
-  .cards{ grid-template-columns: repeat(2, 1fr); }
+.cards .card{
+  width: 100%;            /* each card spans the container */
 }
-@media (min-width: 1000px){
-  .cards{ grid-template-columns: repeat(3, 1fr); }
-}
-/* Optional: equal heights + tidy overflow */
+
+/* Optional: equal heights + tidy overflow for card content */
 .card{
   display: grid;
   align-content: start;
