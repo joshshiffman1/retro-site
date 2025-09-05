@@ -139,7 +139,7 @@ footer{
 }
 
 /* =============================
-   Erratic Wandering Wizard (PNG) + Flip
+   Erratic Wandering Wizard (PNG) — Smaller + Full Bottom-Half + Flip
    ============================= */
 .wizard-image {
   position: fixed;
@@ -147,11 +147,11 @@ footer{
   left: 0;
   z-index: 50;
   pointer-events: none;                 /* clicks pass through */
-  width: clamp(70px, 8vw, 120px);       /* smaller wizard size */
+  width: clamp(50px, 6vw, 90px);        /* smaller wizard size */
   opacity: .95;
   transform-origin: center bottom;      /* flip around feet */
   will-change: transform;
-  animation: wizard-wander 12s infinite ease-in-out;
+  animation: wizard-wander 16s infinite ease-in-out;
 }
 
 .wizard-image img {
@@ -160,16 +160,16 @@ footer{
   height: auto;
 }
 
-/* Erratic wandering across bottom half with directional flips */
+/* Roam across the entire bottom half using viewport units; flip when turning */
 @keyframes wizard-wander {
-  0%   { transform: translate3d(0,   0, 0)          scaleX(1); }
-  10%  { transform: translate3d(120px, -40px, 0)    scaleX(1); }
-  25%  { transform: translate3d(300px, -100px, 0)   scaleX(-1); }  /* flip */
-  40%  { transform: translate3d(80px,  -150px, 0)   scaleX(-1); }
-  55%  { transform: translate3d(400px, -60px, 0)    scaleX(1); }   /* flip back */
-  70%  { transform: translate3d(200px, -120px, 0)   scaleX(-1); }  /* flip */
-  85%  { transform: translate3d(500px, -30px, 0)    scaleX(1); }   /* flip back */
-  100% { transform: translate3d(0,    0, 0)         scaleX(1); }
+  0%   { transform: translate3d(0,    0,    0)  scaleX(1); }
+  15%  { transform: translate3d(25vw, -60px, 0)  scaleX(1); }
+  30%  { transform: translate3d(50vw, -120px,0)  scaleX(-1); } /* middle flip */
+  45%  { transform: translate3d(80vw, -80px, 0)  scaleX(-1); } /* far right */
+  60%  { transform: translate3d(60vw, -150px,0)  scaleX(1); }  /* drift back */
+  75%  { transform: translate3d(30vw, -90px, 0)  scaleX(-1); } /* middle-left */
+  90%  { transform: translate3d(10vw, -40px, 0)  scaleX(1); }  /* near left */
+  100% { transform: translate3d(0,    0,    0)  scaleX(1); }   /* reset */
 }
 
 /* Respect reduced-motion preferences */
