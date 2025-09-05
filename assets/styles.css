@@ -139,7 +139,7 @@ footer{
 }
 
 /* =============================
-   Erratic Wandering Wizard (PNG) — Smaller + Full Bottom-Half + Flip
+   Erratic Wandering Wizard (PNG) — Even Smaller + Full Bottom-Half + Flip
    ============================= */
 .wizard-image {
   position: fixed;
@@ -147,7 +147,7 @@ footer{
   left: 0;
   z-index: 50;
   pointer-events: none;                 /* clicks pass through */
-  width: clamp(40px, 5vw, 70px);        /* smaller wizard size */
+  width: clamp(32px, 4vw, 60px);        /* even smaller wizard */
   opacity: .95;
   transform-origin: center bottom;      /* flip around feet */
   will-change: transform;
@@ -180,4 +180,25 @@ footer{
 /* Hide wizard on very small screens */
 @media (max-width: 480px) {
   .wizard-image { display: none; }
+}
+
+/* =============================
+   About Page Email Link
+   ============================= */
+.email-link {
+  text-align: center;
+  margin: 1rem 0 0;
+  font-size: 0.7rem;
+  letter-spacing: .3px;
+  font-family: "Press Start 2P", system-ui, sans-serif;
+}
+.email-link a {
+  color: var(--ink-muted);
+  text-decoration: none;
+  border-bottom: 2px dashed var(--border);
+  padding-bottom: 2px;
+}
+.email-link a:hover {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
 }
