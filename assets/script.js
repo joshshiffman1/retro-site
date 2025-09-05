@@ -1,9 +1,7 @@
 // assets/script.js
 document.addEventListener('DOMContentLoaded', () => {
   // ---- Single source of truth ----
-  const SITE = {
-    home: 'index.html', // homepage path
-  };
+  const SITE = { home: 'index.html' };
 
   const NAV_ITEMS = [
     { href: 'index.html', label: 'Main' },
@@ -11,39 +9,63 @@ document.addEventListener('DOMContentLoaded', () => {
     { href: 'other.html', label: 'Other' },
   ];
 
-  // ---- Helpers ----
+  // ---- Time formatting (Eastern) ----
   const TZ = 'America/New_York';
   const fmt = new Intl.DateTimeFormat('en-US', {
     timeZone: TZ,
     hour: '2-digit',
     minute: '2-digit',
-    hour12: true, // change to false for 24h time
+    hour12: true,
   });
-
-  function nowHHMM() {
-    return fmt.format(new Date()); // e.g., "03:47 PM"
-  }
-
-  // ---- Logo: live hh:mm AM/PM in Eastern ----
-  const logoLink = document.querySelector('a.logo');
-
-  function updateLogoTime() {
-    if (!logoLink) return;
-    const t = nowHHMM();
-    logoLink.textContent = t;
-    logoLink.setAttribute('href', SITE.home);
-    logoLink.setAttribute('aria-label', `Home — ${t} Eastern`);
-  }
+  const nowHHMM = () => fmt.format(new Date()); // e.g., "03:47 PM"
 
   function scheduleMinuteTicks(updateFn) {
-    // Align the first tick to the top of the next minute, then tick every minute
     const now = new Date();
-    const msToNextMinute =
-      (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+    const msToNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
     setTimeout(function tick() {
       updateFn();
       setTimeout(tick, 60 * 1000);
     }, Math.max(0, msToNextMinute));
+  }
+
+  // ---- Logo: witch-hat image ABOVE live time ----
+  const logoLink = document.querySelector('a.logo');
+
+  function buildLogoOnce() {
+    if (!logoLink) return null;
+
+    // Clear any existing text
+    logoLink.textContent = '';
+
+    // Create and add image
+    const logoImg = new Image();
+    logoImg.src = 'assets/img/witch-hat.png';
+    logoImg.alt = 'Site logo';
+    logoImg.className = 'logo-img'; // styled in CSS
+
+    // Create and add time element
+    const timeSpan = document.createElement('span');
+    timeSpan.className = 'logo-time'; // styled in CSS
+    timeSpan.textContent = nowHHMM();
+
+    // Stack them inside the anchor
+    logoLink.appendChild(logoImg);
+    logoLink.appendChild(timeSpan);
+
+    // Basic link attributes
+    logoLink.setAttribute('href', SITE.home);
+    logoLink.setAttribute('aria-label', `Home — ${timeSpan.textContent} Eastern`);
+
+    return timeSpan;
+  }
+
+  const timeNode = buildLogoOnce();
+
+  function updateLogoTime() {
+    if (!logoLink || !timeNode) return;
+    const t = nowHHMM();
+    timeNode.textContent = t;
+    logoLink.setAttribute('aria-label', `Home — ${t} Eastern`);
   }
 
   updateLogoTime();
@@ -52,9 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---- Canonical nav injection ----
   const nav = document.getElementById('site-nav');
   if (nav) {
-    nav.innerHTML = NAV_ITEMS
-      .map(item => `<li><a href="${item.href}">${item.label}</a></li>`)
-      .join('');
+    nav.innerHTML = NAV_ITEMS.map(item => `<li><a href="${item.href}">${item.label}</a></li>`).join('');
 
     // Highlight the current page automatically
     const currentFile = (() => {
