@@ -9,9 +9,25 @@
     <link rel="stylesheet" href="assets/styles.css">
     <style>
       .footer-email {
-        text-align: center;
-        margin: 2rem 0;
+        position: fixed;
+        bottom: 8px; /* a few pixels from bottom */
+        left: 50%;
+        transform: translateX(-50%);
+        color: #d5dae6; /* match card background grey */
         font-weight: bold;
+        text-decoration: none;
+        background: none;   /* ensure no background */
+        border: none;       /* remove any border */
+        box-shadow: none;   /* prevent accidental shadows */
+      }
+
+      .footer-email a {
+        color: inherit; /* inherit grey color */
+        text-decoration: none;
+      }
+
+      .footer-email a:hover {
+        text-decoration: underline;
       }
     </style>
   </head>
@@ -35,16 +51,16 @@
         <h1 style="margin-top:0">About</h1>
         <p>
           This site is a curated space for my thoughts, discoveries, and curiosities. 
-          A simple archive to document what I’m learning, exploring, and creating. This site serves 
-          as both a record and a resource.
+          A simple archive to document what I’m learning, exploring, and creating—serving 
+          as both a record and a resource as my work evolves.
         </p>
       </div>
     </main>
 
-    <!-- Email at bottom of the page -->
-    <footer class="footer-email">
+    <!-- Email sticky at bottom, text only -->
+    <div class="footer-email">
       <a href="mailto:joshshiffman@gmail.com">joshshiffman@gmail.com</a>
-    </footer>
+    </div>
 
     <!-- Image-based wizard (appears only on About) -->
     <div class="wizard-image" aria-hidden="true">
