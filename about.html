@@ -16,9 +16,9 @@
         color: #d5dae6; /* match card background grey */
         font-weight: bold;
         text-decoration: none;
-        background: none;   /* ensure no background */
-        border: none;       /* remove any border */
-        box-shadow: none;   /* prevent accidental shadows */
+        background: none;
+        border: none;
+        box-shadow: none;
       }
 
       .footer-email a {
@@ -47,14 +47,29 @@
     </header>
 
     <main class="container">
-      <div class="card">
-        <h1 style="margin-top:0">About</h1>
-        <p>
-          
-This site gathers my thoughts, discoveries, and curiosities. I update it as new things cross my mind that seem curious enough to share.
+      <!-- Wrap multiple cards inside grid -->
+      <section class="cards">
 
-        </p>
-      </div>
+        <!-- Card 1 (original) -->
+        <div class="card">
+          <h1 style="margin-top:0">About</h1>
+          <p>
+            This site gathers my thoughts, discoveries, and curiosities. 
+            I update it as new things cross my mind that seem curious enough to share.
+          </p>
+        </div>
+
+        <!-- Card 2 (duplicate for example) -->
+        <div class="card">
+          <h1 style="margin-top:0">About (Part 2)</h1>
+          <p>
+            This is a second card to demonstrate the multi-card layout. 
+            On mobile it stacks vertically; on larger screens it flows into columns 
+            thanks to the <code>.cards</code> grid styling.
+          </p>
+        </div>
+
+      </section>
     </main>
 
     <!-- Email sticky at bottom, text only -->
