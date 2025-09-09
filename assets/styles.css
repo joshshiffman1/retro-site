@@ -198,10 +198,10 @@ footer{
   bottom: 0;
   left: 0;
   z-index: 50;
-  pointer-events: none;                 
-  width: clamp(32px, 4vw, 60px);        
+  pointer-events: none;
+  width: clamp(32px, 4vw, 60px);
   opacity: .95;
-  transform-origin: center bottom;      
+  transform-origin: center bottom;
   will-change: transform;
   animation: wizard-wander 16s infinite ease-in-out;
 }
@@ -230,10 +230,10 @@ footer{
 /* Show wizard on mobile, just smaller */
 @media (max-width: 480px) {
   .wizard-image {
-    display: block;                             
-    width: clamp(24px, 9vw, 40px);              
+    display: block;
+    width: clamp(24px, 9vw, 40px);
     bottom: max(6px, env(safe-area-inset-bottom, 0px));
-    animation-duration: 20s;                    
+    animation-duration: 20s;
   }
 }
 
@@ -292,17 +292,19 @@ footer{
 @media (prefers-reduced-motion: reduce) {
   .cursor { animation: none; }
 }
+
 /* =============================
-   Mobile Blocker (Retro Modal)
+   Mobile Blocker (Retro Modal) — Hard Block
    ============================= */
 .mb-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(35, 48, 63, 0.65); /* ink w/ opacity */
-  z-index: 9999;
+  background: rgba(35, 48, 63, 0.8); /* darker to clearly cover everything */
+  z-index: 2147483647;               /* absolute top */
   display: grid;
   place-items: center;
   padding: var(--space-2);
+  pointer-events: all;               /* capture all input */
 }
 
 .mb-modal {
@@ -315,6 +317,7 @@ footer{
   font-family: "Press Start 2P", system-ui, sans-serif;
   color: var(--ink);
   text-align: center;
+  position: relative;
 }
 
 .mb-title {
@@ -333,6 +336,7 @@ footer{
   display: grid;
   gap: var(--space-2);
   margin-top: var(--space-2);
+  justify-items: center;
 }
 
 .mb-row {
@@ -340,6 +344,7 @@ footer{
   grid-template-columns: 1fr auto;
   gap: var(--space-2);
   align-items: center;
+  width: min(520px, 86vw);
 }
 
 .mb-input {
@@ -350,9 +355,10 @@ footer{
   border-radius: 10px;
   background: #fff;
   color: var(--ink);
+  width: 100%;
 }
 
-.mb-btn, .mb-close {
+.mb-btn {
   appearance: none;
   cursor: pointer;
   font-family: "Press Start 2P", system-ui, sans-serif;
@@ -365,29 +371,9 @@ footer{
   box-shadow: 0 3px 0 var(--brand-strong);
   transition: transform .12s ease, filter .12s ease;
 }
-.mb-btn:hover, .mb-close:hover { filter: brightness(1.05); }
-.mb-btn:active, .mb-close:active { transform: translateY(1px); }
-
-.mb-close {
-  background: var(--card);
-  color: var(--ink);
-  box-shadow: 0 3px 0 var(--border);
-  border-color: var(--border);
-}
-
-.mb-x {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  background: none;
-  border: none;
-  font: inherit;
-  color: var(--ink);
-  cursor: pointer;
-  padding: .4rem .6rem;
-}
-.mb-x:hover { text-decoration: underline; }
+.mb-btn:hover { filter: brightness(1.05); }
+.mb-btn:active { transform: translateY(1px); }
 
 @media (prefers-reduced-motion: reduce) {
-  .mb-btn, .mb-close { transition: none; }
+  .mb-btn { transition: none; }
 }
