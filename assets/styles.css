@@ -292,3 +292,102 @@ footer{
 @media (prefers-reduced-motion: reduce) {
   .cursor { animation: none; }
 }
+/* =============================
+   Mobile Blocker (Retro Modal)
+   ============================= */
+.mb-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(35, 48, 63, 0.65); /* ink w/ opacity */
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: var(--space-2);
+}
+
+.mb-modal {
+  width: min(560px, 92vw);
+  background: var(--card);
+  border: 3px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 8px 0 var(--border);
+  padding: var(--space-4);
+  font-family: "Press Start 2P", system-ui, sans-serif;
+  color: var(--ink);
+  text-align: center;
+}
+
+.mb-title {
+  font-size: var(--font-h2);
+  margin: 0 0 var(--space-2);
+}
+
+.mb-body {
+  font-size: clamp(.72rem, .45rem + .8vw, .95rem);
+  color: var(--ink-muted);
+  margin-bottom: var(--space-3);
+  line-height: 1.8;
+}
+
+.mb-actions {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.mb-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.mb-input {
+  font-family: "Press Start 2P", system-ui, sans-serif;
+  font-size: .85rem;
+  padding: .75rem .9rem;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+}
+
+.mb-btn, .mb-close {
+  appearance: none;
+  cursor: pointer;
+  font-family: "Press Start 2P", system-ui, sans-serif;
+  font-size: .85rem;
+  padding: .75rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: var(--brand);
+  color: #fff;
+  box-shadow: 0 3px 0 var(--brand-strong);
+  transition: transform .12s ease, filter .12s ease;
+}
+.mb-btn:hover, .mb-close:hover { filter: brightness(1.05); }
+.mb-btn:active, .mb-close:active { transform: translateY(1px); }
+
+.mb-close {
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: 0 3px 0 var(--border);
+  border-color: var(--border);
+}
+
+.mb-x {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: none;
+  border: none;
+  font: inherit;
+  color: var(--ink);
+  cursor: pointer;
+  padding: .4rem .6rem;
+}
+.mb-x:hover { text-decoration: underline; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mb-btn, .mb-close { transition: none; }
+}
