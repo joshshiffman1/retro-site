@@ -33,10 +33,13 @@
           </p>
         </div>
 
-        <!-- Typewriter goes under the Main card -->
-        <div class="typewriter-container">
+        <!-- Typewriter goes under the Main card (centered) -->
+        <div class="typewriter-container"
+             data-component="typewriter"
+             data-phrases='["Welcome to my site","Welcome to what\u2019s on my mind","Welcome to what interests me"]'
+             data-anchor="Welcome">
           <div class="typewriter" aria-live="polite">
-            <span id="typewriter-text"></span><span class="cursor" aria-hidden="true"></span>
+            <span class="typewriter-text"></span><span class="cursor" aria-hidden="true"></span>
           </div>
         </div>
 
@@ -50,6 +53,7 @@
       </section>
     </main>
 
-    <script src="assets/script.js" defer></script>
+    <!-- Switched to module to enable dynamic component loading -->
+    <script type="module" src="assets/script.js"></script>
   </body>
 </html>

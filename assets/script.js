@@ -45,7 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---- Canonical nav injection ----
   const nav = document.getElementById('site-nav');
   if (nav) {
-    nav.innerHTML = NAV_ITEMS.map(item => `<li><a href="${item.href}">${item.label}</a></li>`).join('');
+    nav.innerHTML = NAV_ITEMS
+      .map(item => `<li><a href="${item.href}">${item.label}</a></li>`)
+      .join('');
 
     // Highlight the current page automatically
     const currentFile = (() => {
@@ -74,74 +76,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---- Optional: live <title> updates (Page · hh:mm AM/PM) ----
   function updateTitle() {
-    const file = (location.pathname.split('/').pop() || '').toLowerCase() || SITE.home.toLowerCase();
+    const file =
+      (location.pathname.split('/').pop() || '').toLowerCase() ||
+      SITE.home.toLowerCase();
     const match = NAV_ITEMS.find(i => i.href.toLowerCase() === file);
     if (match) document.title = `${match.label} · ${nowHHMM()}`;
   }
   updateTitle();
   scheduleMinuteTicks(updateTitle);
 
-  // ---- Typewriter (Press Start 2P) ----
-  (function initTypewriter() {
-    const el = document.getElementById('typewriter-text');
-    if (!el) return; // only runs on pages that include the typewriter markup
-
-    const phrases = [
-      "Welcome to my site",
-      "Welcome to what's on my mind",
-      "Welcome to what interests me"
-    ];
-    const anchor = "Welcome"; // delete back to this
-
-    const TYPING_MS = 90;       // per character
-    const DELETING_MS = 60;     // per character
-    const PAUSE_FULL = 1200;    // pause after full phrase typed
-    const PAUSE_ANCHOR = 800;   // pause when trimmed back to "Welcome"
-
-    let p = 0;        // phrase index
-    let visible = ""; // current visible text
-
-    const sleep = (ms) => new Promise(r => setTimeout(r, ms));
-
-    function* typeTo(target) {
-      while (visible !== target) {
-        visible = target.slice(0, visible.length + 1);
-        el.textContent = visible;
-        yield TYPING_MS;
-      }
+  // ============================
+  // Component loader (scalable)
+  // Dynamically imports JS for any [data-component] found on the page.
+  // Each component file should export a default init(el) function.
+  // ============================
+  document.querySelectorAll('[data-component]').forEach(async (el) => {
+    const name = el.dataset.component;
+    try {
+      const mod = await import(`./components/${name}.js`);
+      const init = mod.default || mod.init;
+      if (typeof init === 'function') init(el);
+    } catch (e) {
+      console.error(`Failed to load component "${name}"`, e);
     }
-
-    function* eraseTo(target) {
-      while (visible !== target) {
-        visible = visible.slice(0, Math.max(target.length, visible.length - 1));
-        el.textContent = visible;
-        yield DELETING_MS;
-      }
-    }
-
-    async function loop() {
-      // Ensure we start by showing the anchor at least once
-      if (!visible) {
-        for (const d of typeTo(anchor)) await sleep(d);
-        await sleep(PAUSE_ANCHOR);
-      }
-
-      while (true) {
-        const phrase = phrases[p];
-
-        // 1) Type full phrase
-        for (const d of typeTo(phrase)) await sleep(d);
-        await sleep(PAUSE_FULL);
-
-        // 2) Delete back to anchor ("Welcome")
-        for (const d of eraseTo(anchor)) await sleep(d);
-        await sleep(PAUSE_ANCHOR);
-
-        // Next phrase (wrap)
-        p = (p + 1) % phrases.length;
-      }
-    }
-
-    loop();
-  })();
+  });
 });
