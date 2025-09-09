@@ -80,4 +80,68 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   updateTitle();
   scheduleMinuteTicks(updateTitle);
+
+  // ---- Typewriter (Press Start 2P) ----
+  (function initTypewriter() {
+    const el = document.getElementById('typewriter-text');
+    if (!el) return; // only runs on pages that include the typewriter markup
+
+    const phrases = [
+      "Welcome to my site",
+      "Welcome to what's on my mind",
+      "Welcome to what interests me"
+    ];
+    const anchor = "Welcome"; // delete back to this
+
+    const TYPING_MS = 90;       // per character
+    const DELETING_MS = 60;     // per character
+    const PAUSE_FULL = 1200;    // pause after full phrase typed
+    const PAUSE_ANCHOR = 800;   // pause when trimmed back to "Welcome"
+
+    let p = 0;        // phrase index
+    let visible = ""; // current visible text
+
+    const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+    function* typeTo(target) {
+      while (visible !== target) {
+        visible = target.slice(0, visible.length + 1);
+        el.textContent = visible;
+        yield TYPING_MS;
+      }
+    }
+
+    function* eraseTo(target) {
+      while (visible !== target) {
+        visible = visible.slice(0, Math.max(target.length, visible.length - 1));
+        el.textContent = visible;
+        yield DELETING_MS;
+      }
+    }
+
+    async function loop() {
+      // Ensure we start by showing the anchor at least once
+      if (!visible) {
+        for (const d of typeTo(anchor)) await sleep(d);
+        await sleep(PAUSE_ANCHOR);
+      }
+
+      while (true) {
+        const phrase = phrases[p];
+
+        // 1) Type full phrase
+        for (const d of typeTo(phrase)) await sleep(d);
+        await sleep(PAUSE_FULL);
+
+        // 2) Delete back to anchor ("Welcome")
+        for (const d of eraseTo(anchor)) await sleep(d);
+        await sleep(PAUSE_ANCHOR);
+
+        // Next phrase (wrap)
+        p = (p + 1) % phrases.length;
+      }
+    }
+
+    loop();
+  })();
 });
