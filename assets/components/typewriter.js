@@ -5,9 +5,9 @@ export default function init(root) {
 
   // Get phrases + anchor from HTML dataset
   const phrases = parseJSON(root.dataset.phrases, [
-    "Welcome to my site",
-    "Welcome to what's on my mind",
-    "Welcome to what interests me",
+    "Welcome to my site.",
+    "Welcome to what's on my mind.",
+    "Welcome to what interests me.",
   ]);
   const anchor = root.dataset.anchor || "Welcome";
 
